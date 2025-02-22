@@ -34,7 +34,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b446062a987355240836ee0e0ec21010, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b446062a987355240836ee0e0ec21010, type: 3}
       propertyPath: m_LocalRotation.x
@@ -42,19 +42,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b446062a987355240836ee0e0ec21010, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7072302
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b446062a987355240836ee0e0ec21010, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7069834
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b446062a987355240836ee0e0ec21010, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -89.98
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b446062a987355240836ee0e0ec21010, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b446062a987355240836ee0e0ec21010, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b446062a987355240836ee0e0ec21010, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -116,6 +116,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SPHERE_RADIUS: 1
   speed: 1
+  mosquitoBuzz: {fileID: 0}
+  maxVolume: 1
+  minVolume: 0.05
 --- !u!65 &667694220772205545
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -129,14 +132,14 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.015532088, y: 0.022357013, z: 0.016855597}
-  m_Center: {x: 0.00023571693, y: -0.0022738597, z: 0.005594369}
+  m_Size: {x: 0.03759071, y: 0.043603692, z: 0.04608881}
+  m_Center: {x: 0.00026731341, y: -0.002215509, z: 0.0040044934}
 --- !u!54 &8205611847502027758
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -176,3 +179,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fcdb4214ffa1b94d9e9225a689e5d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawner: {fileID: 0}
