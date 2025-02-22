@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public class MosquitoMovement : MonoBehaviour
 {
     public float SPHERE_RADIUS = 10.0f;  // Movement area size
@@ -8,38 +9,67 @@ public class MosquitoMovement : MonoBehaviour
     private float t = 0; // Bezier curve parameter (0 to 1)
     private Vector3 lastPosition; // Store last position for rotation calculation
 
+    private AudioSource audioSource;
+    public AudioClip mosquitoBuzz; // Assign this in the Inspector
+    public float maxVolume = 1.0f;  // Maximum volume when closest to the camera
+    public float minVolume = 0.05f;  // Minimum volume when farthest from the camera
+
     void Start()
     {
         GenerateNewBezierCurve();
         lastPosition = transform.position;
+
+        // Get or add an AudioSource component
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        // Assign the mosquito sound
+        if (mosquitoBuzz == null)
+        {
+            mosquitoBuzz = Resources.Load<AudioClip>("flying-mosquito-105770"); // Ensure file is in Resources folder
+        }
+
+        if (mosquitoBuzz != null)
+        {
+            audioSource.clip = mosquitoBuzz;
+            audioSource.loop = true;
+            audioSource.playOnAwake = true;
+            audioSource.spatialBlend = 1.0f; // 3D effect
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogError("Mosquito sound file not found!");
+        }
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        
-    }
-
-    void FixedUpdate() {
         if (t < 1)
         {
             t += speed * Time.deltaTime; // Increase t based on speed
             Vector3 newPosition = BezierCurve(t, controlPoints[0], controlPoints[1], controlPoints[2], controlPoints[3]);
 
-            // // Calculate direction vector
-            // Vector3 direction = (newPosition - lastPosition).normalized;
-            // if (direction != Vector3.zero) // Ensure we don't rotate to NaN
-            // {
-            //     transform.rotation = Quaternion.LookRotation(direction);
-            // }
-
             transform.position = newPosition;
             lastPosition = newPosition; // Update last position
+
+            AdjustSoundVolume(); // Adjust volume based on distance
         }
         else
         {
             GenerateNewBezierCurve();
             t = 0;
         }
+    }
+
+    void AdjustSoundVolume()
+    {
+        float distance = Vector3.Distance(transform.position, Camera.main.transform.position);
+        float normalizedDistance = Mathf.Clamp01(distance / SPHERE_RADIUS); // Normalize between 0 and 1
+        audioSource.volume = Mathf.Lerp(maxVolume, minVolume, normalizedDistance);
     }
 
     bool checkValidPosition(Vector3 position, Vector3 otherPosition)
@@ -69,11 +99,10 @@ public class MosquitoMovement : MonoBehaviour
     Vector3 GenerateRandomPosition()
     {
         Vector3 center = Camera.main.transform.position;
-        // use angles instead of ranges, it will be better in equal distribution of mosquito positions
-            float x = Random.Range(-SPHERE_RADIUS, SPHERE_RADIUS);
-            float y = Random.Range(-SPHERE_RADIUS, 0);
-            float z = Random.Range(0, SPHERE_RADIUS);
-            Vector3 position = new Vector3(x, y, z) + center;
+        float x = Random.Range(-SPHERE_RADIUS, SPHERE_RADIUS);
+        float y = Random.Range(-SPHERE_RADIUS, 0);
+        float z = Random.Range(0, SPHERE_RADIUS);
+        Vector3 position = new Vector3(x, y, z) + center;
         return position;
     }
 
