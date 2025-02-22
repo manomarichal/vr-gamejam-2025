@@ -4,6 +4,8 @@ public class MosquitoMovement : MonoBehaviour
 {
     public float SPHERE_RADIUS = 10.0f;  // Movement area size
     public float speed = 1.0f;           // Speed of movement
+    public bool tutorialMode = false;   // Ensures new points are in view
+    public float handReachRadius = 0.5f; // Max distance from player for tutorial mode
 
     private Vector3[] controlPoints = new Vector3[4]; // Bezier curve control points
     private float t = 0; // Bezier curve parameter (0 to 1)
@@ -72,19 +74,6 @@ public class MosquitoMovement : MonoBehaviour
         audioSource.volume = Mathf.Lerp(maxVolume, minVolume, normalizedDistance);
     }
 
-    bool checkValidPosition(Vector3 position, Vector3 otherPosition)
-    {
-        Vector3 centerPosition = Camera.main.transform.position;
-
-        if (Vector3.Distance(position, otherPosition) < 2.0f)
-            return false;
-
-        if (Vector3.Distance(position, centerPosition) < 1.0f)
-            return false;
-
-        return (position.magnitude <= SPHERE_RADIUS);
-    }
-
     void GenerateNewBezierCurve()
     {
         Vector3 startPos = transform.position;
@@ -99,11 +88,46 @@ public class MosquitoMovement : MonoBehaviour
     Vector3 GenerateRandomPosition()
     {
         Vector3 center = Camera.main.transform.position;
-        float x = Random.Range(-SPHERE_RADIUS, SPHERE_RADIUS);
-        float y = Random.Range(-SPHERE_RADIUS, 0);
-        float z = Random.Range(0, SPHERE_RADIUS);
-        Vector3 position = new Vector3(x, y, z) + center;
+        Vector3 position;
+        
+        if (tutorialMode)
+        {
+            // Ensure position is within camera view and within hand reach
+            position = GetPositionInViewAndReach();
+        }
+        else
+        {
+            float x = Random.Range(-SPHERE_RADIUS, SPHERE_RADIUS);
+            float y = Random.Range(-SPHERE_RADIUS, 0);
+            float z = Random.Range(0, SPHERE_RADIUS);
+            position = new Vector3(x, y, z) + center;
+        }
         return position;
+    }
+
+    Vector3 GetPositionInViewAndReach()
+    {
+        Camera cam = Camera.main;
+        Vector3 position;
+        int attempts = 10;
+        do
+        {
+            Vector3 viewportPoint = new Vector3(Random.Range(0.2f, 0.8f), Random.Range(0.2f, 0.8f), Random.Range(0.5f, handReachRadius));
+            position = cam.ViewportToWorldPoint(viewportPoint);
+            attempts--;
+        } while (!checkValidPosition(position, transform.position) && attempts > 0);
+
+        return position;
+    }
+
+    bool checkValidPosition(Vector3 position, Vector3 otherPosition)
+    {
+        Vector3 centerPosition = Camera.main.transform.position;
+        if (Vector3.Distance(position, otherPosition) < 2.0f || Vector3.Distance(position, centerPosition) < 1.0f)
+        {
+            return false;
+        }
+        return position.magnitude <= SPHERE_RADIUS;
     }
 
     Vector3 BezierCurve(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
