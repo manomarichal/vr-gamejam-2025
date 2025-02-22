@@ -114,8 +114,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba35c211f0d7ceb418b9971c2d4ea39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SPHERE_RADIUS: 1
+  SPHERE_RADIUS: 1.5
   speed: 1
+  tutorialMode: 0
+  handReachRadius: 0.5
   mosquitoBuzz: {fileID: 0}
   maxVolume: 1
   minVolume: 0.05

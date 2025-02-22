@@ -1201,7 +1201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   can_clap: 1
-  clap_cd: 1
+  clap_cd: 0.1
   effectPrefab: {fileID: 994874907863508194, guid: 81c4525b03d79f54b9832d4462a475ef, type: 3}
 --- !u!54 &1539942902
 Rigidbody:
@@ -1325,7 +1325,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828601335}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 9.67}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1334,7 +1334,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 734, y: 349.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1468, y: 699}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1660057539 &9223372036854775807

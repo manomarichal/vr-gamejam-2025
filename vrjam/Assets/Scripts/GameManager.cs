@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // TODO, spawn tutorialmosquito   
+        _tutorialMosquito = SpawnMosquito();
+        _tutorialMosquito.GetComponent<MosquitoMovement>().tutorialMode = true;
         _tutorialPhase = 1;
     }
 
@@ -57,10 +58,12 @@ public class GameManager : MonoBehaviour
         SpawnMosquito();
     }
 
-    private void SpawnMosquito()
+    private GameObject SpawnMosquito()
     {
         Debug.Log("spawn!!");
         GameObject newObject = Instantiate(mosquitoPrefab, transform.position, Quaternion.Euler(270, 90, 90));
         newObject.GetComponent<ClapTrigger>().spawner = this;
+        _tutorialMosquito = null;
+        return newObject;
     }
 }

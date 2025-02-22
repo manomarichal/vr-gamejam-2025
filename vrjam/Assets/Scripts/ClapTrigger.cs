@@ -8,10 +8,6 @@ public class ClapTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (spawner != null)
-        {
-            spawner.ObjectDestroyed();
-        }
         Destroy(this.gameObject);
     }
 }
