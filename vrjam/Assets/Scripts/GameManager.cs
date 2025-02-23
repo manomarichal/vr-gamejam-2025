@@ -93,12 +93,12 @@ public class GameManager : MonoBehaviour
 
         clockText.text = currentHour.ToString("00") + ":" + currentMinute.ToString("00");
     }
-
+    
     void FixedUpdate()
     {
         _aliveMosquitos = Object.FindObjectsOfType<MosquitoMovement>().Length;
     }
-
+    
     IEnumerator SpawnMosquitoWithDelay()
     {
         while (true)

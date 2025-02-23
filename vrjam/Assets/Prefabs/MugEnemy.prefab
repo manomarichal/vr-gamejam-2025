@@ -189,3 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 0}
   bloodExplosion: {fileID: 5286038967083178772, guid: bcdb8e15a4522ff488951184563af6f8, type: 3}
+  audioClips:
+  - {fileID: 8300000, guid: 6c1b527d5c47b3f4ca05191757cdb552, type: 3}
+  - {fileID: 8300000, guid: d6c0f01355016344ca5054ffd7f3007b, type: 3}
+  - {fileID: 8300000, guid: 2214628eefdb9284aadbfdf0d917ab64, type: 3}
