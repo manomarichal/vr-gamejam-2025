@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,12 +10,14 @@ public class GameManager : MonoBehaviour
     public AudioClip[] audioClips; // This is the exported variable
 
     public ParticleSystem particleSystem;
-
     public GameObject mosquitoPrefab;
-    private GameObject _tutorialMosquito = null;
+    public TextMeshProUGUI scoreText; // Reference to the TextMeshPro component
 
+    private GameObject _tutorialMosquito = null;
     private int _aliveMosquitos = 0;
     private int _tutorialPhase = 0;
+
+    private static int killCount = 0; // Static variable to keep track of the kill count
 
     // Start is called before the first frame update
     void Start()
@@ -38,12 +41,12 @@ public class GameManager : MonoBehaviour
             _tutorialPhase = 3;
         }
     }
-    
+
     void FixedUpdate()
     {
         _aliveMosquitos = Object.FindObjectsOfType<MosquitoMovement>().Length;
     }
-    
+
     IEnumerator SpawnMosquitoWithDelay()
     {
         while (true)
@@ -60,5 +63,11 @@ public class GameManager : MonoBehaviour
         GameObject newObject = Instantiate(mosquitoPrefab, transform.position, Quaternion.Euler(270, 90, 90));
         _tutorialMosquito = null;
         return newObject;
+    }
+
+    public void IncrementKillCount()
+    {
+        killCount++;
+        scoreText.text = "Kills: " + killCount;
     }
 }
