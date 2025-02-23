@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public GameObject mosquitoPrefab;
     public TextMeshProUGUI scoreText; // Reference to the TextMeshPro component
     public TextMeshProUGUI clockText;
+    public AudioClip introAudio; // The audio clip to play
+    public AudioClip introAudio2; // The audio clip to play
 
     public PalmCollisionDetector palmCollision;
     public TextMeshProUGUI gameOverText;
@@ -33,20 +35,38 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _tutorialMosquito = SpawnMosquito();
-        _tutorialMosquito.GetComponent<MosquitoMovement>().tutorialMode = true;
-        _tutorialPhase = 1;
+        _tutorialPhase = -1;
         gameOverText.gameObject.SetActive(false);
         gameTime = 0;
         // clockText.text = startHour.ToString("00") + ":" + startMinute.ToString("00");
-        scoreText.text = "Clap to kill as many mosquitoes as you can during the night!";
+        scoreText.text = "";
         clockText.text = "21:00";
+        StartCoroutine(SetTutorialPhase0());
     }
 
     // Update is called once per frame
     void Update()
     {
         gameTime += (float)Time.deltaTime;
+        if (_tutorialPhase == 0)
+        {
+             scoreText.text = "Clap to kill as many mosquitoes as you can during the night!";
+            _tutorialMosquito = SpawnMosquito();
+            _tutorialMosquito.GetComponent<MosquitoMovement>().tutorialMode = true;  
+            _tutorialPhase = 1;
+
+            // Create a new GameObject dynamically
+            GameObject audioObject = new GameObject("IntroAudioSource");
+            AudioSource audioSource = audioObject.AddComponent<AudioSource>();
+
+            // Configure the AudioSource
+            audioSource.clip = introAudio2;
+            audioSource.playOnAwake = false; // Ensures it doesn't auto-play before setup
+            audioSource.Play();
+
+            // Destroy the GameObject after the audio clip finishes playing
+            Destroy(audioObject, introAudio2.length);
+        }
 
         if (_tutorialPhase == 1 && _tutorialMosquito == null)
         {
@@ -84,12 +104,30 @@ public class GameManager : MonoBehaviour
 
     }
 
-// Coroutine to delay the tutorial phase change
-private IEnumerator SetTutorialPhaseAfterDelay(float delay)
-{
-    yield return new WaitForSeconds(delay);
-    _tutorialPhase = 4; // Set the tutorial phase after the delay
-}
+    private IEnumerator SetTutorialPhase0()
+    {
+        // Create a new GameObject dynamically
+        GameObject audioObject = new GameObject("IntroAudioSource");
+        AudioSource audioSource = audioObject.AddComponent<AudioSource>();
+
+        // Configure the AudioSource
+        audioSource.clip = introAudio;
+        audioSource.playOnAwake = false; // Ensures it doesn't auto-play before setup
+        audioSource.Play();
+
+        // Destroy the GameObject after the audio clip finishes playing
+        Destroy(audioObject, introAudio.length);
+
+        yield return new WaitForSeconds(6);
+        _tutorialPhase = 0; // Set the tutorial phase after the delay
+    }
+
+    // Coroutine to delay the tutorial phase change
+    private IEnumerator SetTutorialPhaseAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _tutorialPhase = 4; // Set the tutorial phase after the delay
+    }
 
     void PlayClockSound() {
         // TODO: Play alarm beep sound (followed by our Mosquito song)
@@ -124,12 +162,20 @@ private IEnumerator SetTutorialPhaseAfterDelay(float delay)
             currentHour -= 24;
         }
 
+        
         clockText.text = currentHour.ToString("00") + ":" + currentMinute.ToString("00");
     }
     
     void FixedUpdate()
     {
         _aliveMosquitos = Object.FindObjectsOfType<MosquitoMovement>().Length;
+
+        if (_tutorialPhase == 5) {
+            foreach (MosquitoMovement mosquito in FindObjectsOfType<MosquitoMovement>())
+            {
+                Destroy(mosquito.gameObject);
+            }
+        }
     }
     
     IEnumerator SpawnMosquitoWithDelay()
