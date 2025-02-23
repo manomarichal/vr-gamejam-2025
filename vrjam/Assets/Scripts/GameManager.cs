@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         }
         if (_tutorialPhase == 0)
         {
-             scoreText.text = "Clap to kill as many mosquitoes as you can during the night!";
+             scoreText.text = "Clap to kill as many mosquitoes as you can before time runs out!";
             _tutorialMosquito = SpawnMosquito();
             _tutorialMosquito.GetComponent<MosquitoMovement>().tutorialMode = true;  
             _tutorialPhase = 1;
@@ -84,7 +84,6 @@ public class GameManager : MonoBehaviour
 
         if (_tutorialPhase == 2){
             // Tutorial just finished, start normal gameplay
-            SpawnMosquito();
             StartCoroutine(SpawnMosquitoWithDelay());
             _tutorialPhase = 3;
             gameTime = 0;
