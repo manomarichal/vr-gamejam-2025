@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public AudioClip introAudio; // The audio clip to play
     public AudioClip introAudio2; // The audio clip to play
 
+    public AudioSource wekker;
+
     public PalmCollisionDetector palmCollision;
     public TextMeshProUGUI gameOverText;
 
@@ -36,10 +38,10 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _tutorialPhase = -1;
-        gameOverText.gameObject.SetActive(false);
         gameTime = 0;
         // clockText.text = startHour.ToString("00") + ":" + startMinute.ToString("00");
         scoreText.text = "";
+        gameOverText.text = "";
         clockText.text = "22:00";
         StartCoroutine(SetTutorialPhase0());
     }
@@ -92,7 +94,7 @@ public class GameManager : MonoBehaviour
             {
                 PlayClockSound();
                 SetEndView();
-                StartCoroutine(SetTutorialPhaseAfterDelay(3f)); // Start a coroutine to delay the phase change
+                StartCoroutine(SetTutorialPhaseAfterDelay(1f)); // Start a coroutine to delay the phase change
             }
         }
 
@@ -138,8 +140,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(mosquito.gameObject);
         }
-        gameOverText.gameObject.SetActive(true);
-        scoreText.text = "Mosquitos killed: " + killCount + "! Clap to restart the game";
+        wekker.Play();
+        gameOverText.text = "Time to wake up!";
+        scoreText.text = "\nMosquitos killed: " + killCount + "\nClap to restart the game";
 
     }
 
@@ -188,6 +191,11 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(Random.Range(4, 10)); // Random interval'
+
+            if (gameTime >= maxTime){
+                break;
+            }
+
             if (_aliveMosquitos < maxMosquitos) {
                 SpawnMosquito();
             }

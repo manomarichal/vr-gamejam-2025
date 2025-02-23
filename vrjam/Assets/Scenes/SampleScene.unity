@@ -487,6 +487,7 @@ MonoBehaviour:
   clockText: {fileID: 2089110261}
   introAudio: {fileID: 8300000, guid: 5adc0c9e986e9064b9afd3061a8b0623, type: 3}
   introAudio2: {fileID: 8300000, guid: 22bd12da9e2314e43a2417759fc4e617, type: 3}
+  wekker: {fileID: 193533448}
   palmCollision: {fileID: 1539942901}
   gameOverText: {fileID: 165585586}
 --- !u!4 &113586790
@@ -740,7 +741,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -2059,7 +2060,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -351.239, y: -13.333128, z: 322.3114, w: -16.207886}
+  m_margin: {x: -351.239, y: -60.74164, z: 322.3114, w: -16.207886}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
