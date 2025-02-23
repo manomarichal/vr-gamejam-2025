@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public ParticleSystem particleSystem;
     public GameObject mosquitoPrefab;
     public TextMeshProUGUI scoreText; // Reference to the TextMeshPro component
+    public TextMeshProUGUI clockText;
 
     private GameObject _tutorialMosquito = null;
     private int _aliveMosquitos = 0;
