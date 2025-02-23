@@ -15,7 +15,6 @@ public class MosquitoMovement : MonoBehaviour
     private Vector3 lastPosition; // Store last position for rotation calculation
 
     private AudioSource audioSource;
-    public AudioClip mosquitoBuzz; // Assign this in the Inspector
     public float maxVolume = 1.0f;  // Maximum volume when closest to the camera
     public float minVolume = 0.05f;  // Minimum volume when farthest from the camera
 
@@ -29,12 +28,6 @@ public class MosquitoMovement : MonoBehaviour
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
-        }
-
-        // Assign the mosquito sound
-        if (mosquitoBuzz == null)
-        {
-            mosquitoBuzz = Resources.Load<AudioClip>("flying-mosquito-105770"); // Ensure file is in Resources folder
         }
 
         if (audioClips.Length > 0) // Ensure the array is not empty
@@ -116,10 +109,8 @@ public class MosquitoMovement : MonoBehaviour
         }
         else
         {
-            float x = Random.Range(-SPHERE_RADIUS, SPHERE_RADIUS);
-            float y = Random.Range(-SPHERE_RADIUS, 0);
-            float z = Random.Range(0, SPHERE_RADIUS);
-            position = new Vector3(x, y, z) + center;
+            // random position in sphere of radius sphere radius
+            position = Random.insideUnitSphere * SPHERE_RADIUS + center;
         }
         return position;
     }
