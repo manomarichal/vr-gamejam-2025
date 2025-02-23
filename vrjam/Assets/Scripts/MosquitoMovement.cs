@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class MosquitoMovement : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class MosquitoMovement : MonoBehaviour
     public float speed = 1.0f;           // Speed of movement
     public bool tutorialMode = false;   // Ensures new points are in view
     public float handReachRadius = 0.5f; // Max distance from player for tutorial mode
+
+    public AudioClip[] audioClips; // This is the exported variable
 
     private Vector3[] controlPoints = new Vector3[4]; // Bezier curve control points
     private float t = 0; // Bezier curve parameter (0 to 1)
@@ -34,18 +37,34 @@ public class MosquitoMovement : MonoBehaviour
             mosquitoBuzz = Resources.Load<AudioClip>("flying-mosquito-105770"); // Ensure file is in Resources folder
         }
 
-        if (mosquitoBuzz != null)
+        if (audioClips.Length > 0) // Ensure the array is not empty
         {
-            audioSource.clip = mosquitoBuzz;
+            AudioClip randomClip = audioClips[Random.Range(0, audioClips.Length)]; // Select a random clip
+            audioSource.clip = randomClip;
             audioSource.loop = true;
-            audioSource.playOnAwake = true;
+            audioSource.playOnAwake = false; // Start with volume 0 before playing
             audioSource.spatialBlend = 1.0f; // 3D effect
+            audioSource.volume = 0f; // Start silent
             audioSource.Play();
+            
+            StartCoroutine(FadeInAudio(audioSource, 1f)); // Fade in over 0.5 seconds
         }
+
         else
         {
             Debug.LogError("Mosquito sound file not found!");
         }
+    }
+    IEnumerator FadeInAudio(AudioSource source, float duration)
+    {
+        float timer = 0f;
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            source.volume = Mathf.Lerp(0f, 1f, timer / duration); // Gradually increase volume
+            yield return null;
+        }
+        source.volume = 1f; // Ensure volume is fully set at the end
     }
 
     void FixedUpdate()

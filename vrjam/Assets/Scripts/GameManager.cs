@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public int maxTime = 180;
     public int maxMosquitos = 3;
+    public AudioClip[] audioClips; // This is the exported variable
 
     public ParticleSystem particleSystem;
 

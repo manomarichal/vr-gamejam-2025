@@ -115,9 +115,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SPHERE_RADIUS: 1.5
-  speed: 1
+  speed: 0.7
   tutorialMode: 0
   handReachRadius: 0.5
+  audioClips:
+  - {fileID: 8300000, guid: 72ec243cdfba7a941978d420101a4048, type: 3}
+  - {fileID: 8300000, guid: fce123fefe41b2a49a203e2d51ac6156, type: 3}
+  - {fileID: 8300000, guid: d7d30f262134cdc4a90c85b0c1f51398, type: 3}
+  - {fileID: 8300000, guid: 624cdf877b7511848960915a3c1efd1b, type: 3}
+  - {fileID: 8300000, guid: 519bf25d8dcd7ac429add4630d977aaf, type: 3}
   mosquitoBuzz: {fileID: 0}
   maxVolume: 1
   minVolume: 0.05
