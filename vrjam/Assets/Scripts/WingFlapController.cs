@@ -4,7 +4,7 @@ public class WingFlapController : MonoBehaviour
 {
     public Transform leftWing;  // Assign in the Inspector
     public Transform rightWing; // Assign in the Inspector
-    public float flapSpeed = 13;  // Speed of the flap (higher = faster)
+    public float flapSpeed = 15;  // Speed of the flap (higher = faster)
     public float flapAmount = 30f; // Max rotation angle of the wings
 
     private float time;
@@ -39,12 +39,12 @@ void Start()
         float flapRotation = Mathf.Sin(time) * flapAmount;
 
         // Rotate around the y-axis, adjusting the left and right wings in opposite directions
-        leftWing.localRotation = Quaternion.Euler(-90, -flapRotation,  0);  // Rotate around y-axis
-        rightWing.localRotation = Quaternion.Euler(-90, flapRotation,  0); // Rotate around y-axis
+        leftWing.localRotation = Quaternion.Euler(0, 0, flapRotation);  // Rotate around y-axis
+        rightWing.localRotation = Quaternion.Euler(0, 0, -flapRotation); // Rotate around y-axis
 
         // Rotate the wings around the y-axis
-        //leftWing.Rotate(-90, 0, 0);  // Rotate around y-axis
-        //rightWing.Rotate(-90, 0, 0); // Rotate around y-axis
+        leftWing.Rotate(-90, 0, 0);  // Rotate around y-axis
+        rightWing.Rotate(-90, 0, 0); // Rotate around y-axis
 
     }
 
