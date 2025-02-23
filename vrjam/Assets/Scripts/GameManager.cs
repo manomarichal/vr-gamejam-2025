@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public int maxTime = 20; // Max game time in seconds
@@ -14,14 +14,15 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText; // Reference to the TextMeshPro component
     public TextMeshProUGUI clockText;
 
+    public PalmCollisionDetector palmCollision;
     public TextMeshProUGUI gameOverText;
 
     private GameObject _tutorialMosquito = null;
     private int _aliveMosquitos = 0;
     private int _tutorialPhase = 0;
 
-    private static int killCount = 0; // Static variable to keep track of the kill count
-    private static float gameTime = 0; // Current game time in seconds
+    private int killCount = 0; // Static variable to keep track of the kill count
+    private float gameTime = 0; // Current game time in seconds
 
     private static int startHour = 22;
     // private static int startMinute = 0;
@@ -62,17 +63,33 @@ public class GameManager : MonoBehaviour
             gameTime = 0;
         }
 
-        if (_tutorialPhase == 3) {
+        if (_tutorialPhase == 3)
+        {
             // No tutorial anymore
             UpdateClock();
 
-            if (gameTime >= maxTime) {
+            if (gameTime >= maxTime)
+            {
                 PlayClockSound();
-                SetEndView(); 
-                _tutorialPhase = 4;
+                SetEndView();
+                StartCoroutine(SetTutorialPhaseAfterDelay(3f)); // Start a coroutine to delay the phase change
             }
         }
+
+        if (_tutorialPhase == 4 && palmCollision.clapped == true)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            _tutorialPhase = 5;
+        }
+
     }
+
+// Coroutine to delay the tutorial phase change
+private IEnumerator SetTutorialPhaseAfterDelay(float delay)
+{
+    yield return new WaitForSeconds(delay);
+    _tutorialPhase = 4; // Set the tutorial phase after the delay
+}
 
     void PlayClockSound() {
         // TODO: Play alarm beep sound (followed by our Mosquito song)
