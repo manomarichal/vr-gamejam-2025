@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour
         int currentHour = startHour + (int)(gameProgress * (endHourAdjusted - startHour));
         // int currentMinute = 0;
 
-        if (currentHour >= endHour and currentHour < startHour) {
+        if (currentHour >= endHour && currentHour < startHour) {
             clockText.text = endHour.ToString("00") + ":00";
             return;
         }
