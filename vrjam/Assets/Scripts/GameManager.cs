@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
         _tutorialPhase = 1;
         gameTime = 0;
         // clockText.text = startHour.ToString("00") + ":" + startMinute.ToString("00");
+        scoreText.text = "Clap to kill as many mosquitoes as you can!";
         clockText.text = "21:00";
     }
 
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
 
         if (_tutorialPhase == 1 && _tutorialMosquito == null)
         {
+            scoreText.text = "Kills: " + killCount;
             _tutorialPhase = 2;
             gameTime = 0;
         }
@@ -74,9 +76,10 @@ public class GameManager : MonoBehaviour
     }
 
     void SetEndView () {
-        // TODO: Show "Clap to restart game"
-        // Keep alarm view flickering on/off
-        // Show credit scene
+        foreach (MosquitoMovement mosquito in FindObjectsOfType<MosquitoMovement>())
+        {
+            Destroy(mosquito.gameObject);
+        }
     }
 
     void UpdateClock() {
