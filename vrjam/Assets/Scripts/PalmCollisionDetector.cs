@@ -5,6 +5,7 @@ using UnityEngine;
 public class PalmCollisionDetector : MonoBehaviour
 {
     public bool can_clap = true;
+    public bool clapped = false;
 
     public float clap_cd = 1f;
     public ParticleSystem effectPrefab; // Assign in Inspector
@@ -14,6 +15,7 @@ public class PalmCollisionDetector : MonoBehaviour
 
         if (effectPrefab != null)
         {
+            clapped = true;
             ParticleSystem newEffect = Instantiate(effectPrefab, other.transform.position, Quaternion.identity);
             Debug.Log(other.transform.position);
             Destroy(newEffect.gameObject, newEffect.main.duration);
@@ -26,6 +28,7 @@ public class PalmCollisionDetector : MonoBehaviour
     IEnumerator ResetClap()
     {
         yield return new WaitForSeconds(clap_cd); // Random interval
+        clapped = false;
         can_clap = true;
     }
 }

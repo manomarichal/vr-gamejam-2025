@@ -402,6 +402,7 @@ MonoBehaviour:
   mosquitoPrefab: {fileID: 6272750706521012916, guid: a4bee66aa86d6df49a6719ed8ce1d168, type: 3}
   scoreText: {fileID: 1194839730}
   clockText: {fileID: 2089110261}
+  palmCollision: {fileID: 1539942901}
   gameOverText: {fileID: 165585586}
 --- !u!4 &113586790
 Transform:
@@ -1437,6 +1438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   can_clap: 1
+  clapped: 0
   clap_cd: 1
   effectPrefab: {fileID: 0}
 --- !u!1 &1194839728
@@ -1707,6 +1709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   can_clap: 1
+  clapped: 0
   clap_cd: 0.1
   effectPrefab: {fileID: 994874907863508194, guid: 81c4525b03d79f54b9832d4462a475ef, type: 3}
 --- !u!54 &1539942902
