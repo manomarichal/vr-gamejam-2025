@@ -37,19 +37,24 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _tutorialPhase = -1;
         gameTime = 0;
         // clockText.text = startHour.ToString("00") + ":" + startMinute.ToString("00");
-        scoreText.text = "";
+        scoreText.text = "Clap your hands to start the game!";
         gameOverText.text = "";
+        _tutorialPhase = -2;
         clockText.text = "22:00";
-        StartCoroutine(SetTutorialPhase0());
     }
 
     // Update is called once per frame
     void Update()
     {
         gameTime += (float)Time.deltaTime;
+
+        if (_tutorialPhase == -2 && palmCollision.clapped == true){
+            scoreText.text = "";
+            _tutorialPhase = -1;
+            StartCoroutine(SetTutorialPhase0());
+        }
         if (_tutorialPhase == 0)
         {
              scoreText.text = "Clap to kill as many mosquitoes as you can during the night!";
@@ -178,6 +183,10 @@ public class GameManager : MonoBehaviour
     {
         _aliveMosquitos = Object.FindObjectsOfType<MosquitoMovement>().Length;
 
+        if (_aliveMosquitos == 0 && _tutorialPhase == 3){
+            SpawnMosquito();
+        }
+
         if (_tutorialPhase == 5) {
             foreach (MosquitoMovement mosquito in FindObjectsOfType<MosquitoMovement>())
             {
@@ -190,7 +199,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(4, 10)); // Random interval'
+            yield return new WaitForSeconds(Random.Range(3, 6)); // Random interval'
 
             if (gameTime >= maxTime){
                 break;
@@ -204,7 +213,7 @@ public class GameManager : MonoBehaviour
 
     private GameObject SpawnMosquito()
     {
-        GameObject newObject = Instantiate(mosquitoPrefab, transform.position, Quaternion.Euler(270, 90, 90));
+        GameObject newObject = Instantiate(mosquitoPrefab, transform.position, Quaternion.Euler(0, 180, 0));
         _tutorialMosquito = null;
         return newObject;
     }
