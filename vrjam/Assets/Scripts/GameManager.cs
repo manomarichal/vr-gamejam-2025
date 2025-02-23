@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText; // Reference to the TextMeshPro component
     public TextMeshProUGUI clockText;
 
+    public TextMeshProUGUI gameOverText;
+
     private GameObject _tutorialMosquito = null;
     private int _aliveMosquitos = 0;
     private int _tutorialPhase = 0;
@@ -33,9 +35,10 @@ public class GameManager : MonoBehaviour
         _tutorialMosquito = SpawnMosquito();
         _tutorialMosquito.GetComponent<MosquitoMovement>().tutorialMode = true;
         _tutorialPhase = 1;
+        gameOverText.gameObject.SetActive(false);
         gameTime = 0;
         // clockText.text = startHour.ToString("00") + ":" + startMinute.ToString("00");
-        scoreText.text = "Clap to kill as many mosquitoes as you can!";
+        scoreText.text = "Clap to kill as many mosquitoes as you can during the night!";
         clockText.text = "21:00";
     }
 
@@ -80,6 +83,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(mosquito.gameObject);
         }
+        gameOverText.gameObject.SetActive(true);
+        scoreText.text = "Mosquitos killed: " + killCount + "! Clap to restart the game";
+
     }
 
     void UpdateClock() {
