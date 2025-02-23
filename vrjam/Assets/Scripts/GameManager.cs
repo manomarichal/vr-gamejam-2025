@@ -42,12 +42,12 @@ public class GameManager : MonoBehaviour
             _tutorialPhase = 3;
         }
     }
-
+    
     void FixedUpdate()
     {
         _aliveMosquitos = Object.FindObjectsOfType<MosquitoMovement>().Length;
     }
-
+    
     IEnumerator SpawnMosquitoWithDelay()
     {
         while (true)
