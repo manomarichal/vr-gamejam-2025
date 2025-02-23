@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI clockText;
     public AudioClip introAudio; // The audio clip to play
     public AudioClip introAudio2; // The audio clip to play
-
+    public bool firstSpawn = true;
     public AudioSource wekker;
 
     public PalmCollisionDetector palmCollision;
@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(3, 6)); // Random interval'
+            yield return new WaitForSeconds(Random.Range(3, 5)); // Random interval'
 
             if (gameTime >= maxTime){
                 break;
@@ -206,6 +206,11 @@ public class GameManager : MonoBehaviour
 
             if (_aliveMosquitos < maxMosquitos) {
                 SpawnMosquito();
+                if (firstSpawn){
+                    SpawnMosquito();
+                    SpawnMosquito();
+                    firstSpawn = false;
+                }
             }
         }
     }
