@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         gameTime = 0;
         // clockText.text = startHour.ToString("00") + ":" + startMinute.ToString("00");
         scoreText.text = "";
-        clockText.text = "21:00";
+        clockText.text = "22:00";
         StartCoroutine(SetTutorialPhase0());
     }
 
@@ -150,6 +150,11 @@ public class GameManager : MonoBehaviour
 
         int currentHour = startHour + (int)(gameProgress * (endHourAdjusted - startHour));
         // int currentMinute = 0;
+
+        if (currentHour >= endHour and currentHour < startHour) {
+            clockText.text = endHour.ToString("00") + ":00";
+            return;
+        }
 
         // get the minutes
         int totalGameMinutes = (endHourAdjusted - startHour) * 60;
