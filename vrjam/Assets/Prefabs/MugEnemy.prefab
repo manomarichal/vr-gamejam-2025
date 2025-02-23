@@ -182,3 +182,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 0}
+  bloodExplosion: {fileID: 5286038967083178772, guid: bcdb8e15a4522ff488951184563af6f8, type: 3}

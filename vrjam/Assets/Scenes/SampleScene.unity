@@ -396,7 +396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxTime: 180
-  maxMosquitos: 3
+  maxMosquitos: 5
   particleSystem: {fileID: 0}
   mosquitoPrefab: {fileID: 6272750706521012916, guid: a4bee66aa86d6df49a6719ed8ce1d168, type: 3}
 --- !u!4 &113586790

@@ -31,38 +31,32 @@ public class GameManager : MonoBehaviour
             _tutorialPhase = 2;
         }
 
-        if (_tutorialPhase < 2){
-            return;
+        if (_tutorialPhase == 2){
+            SpawnMosquito();
+            StartCoroutine(SpawnMosquitoWithDelay());
+            _tutorialPhase = 3;
         }
-        Debug.Log(_aliveMosquitos);
-        if (_aliveMosquitos == 0)
-        {
-            _aliveMosquitos++;
-           SpawnMosquito(); 
-        }
-        else if (_aliveMosquitos < maxMosquitos) {
-            _aliveMosquitos++;
-            StartCoroutine(SpawnMosquitoWithDelay(_aliveMosquitos * 5));        }
     }
     
-    public void ObjectDestroyed()
+    void FixedUpdate()
     {
-        particleSystem.Play();
-        _aliveMosquitos -= 1;
+        _aliveMosquitos = Object.FindObjectsOfType<MosquitoMovement>().Length;
     }
-
-    IEnumerator SpawnMosquitoWithDelay(float min)
+    
+    IEnumerator SpawnMosquitoWithDelay()
     {
-        Debug.Log("delay!! ");
-        yield return new WaitForSeconds(Random.Range(min, min + 5)); // Random interval
-        SpawnMosquito();
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(7, 15)); // Random interval'
+            if (_aliveMosquitos < maxMosquitos) {
+                SpawnMosquito();
+            }
+        }
     }
 
     private GameObject SpawnMosquito()
     {
-        Debug.Log("spawn!!");
         GameObject newObject = Instantiate(mosquitoPrefab, transform.position, Quaternion.Euler(270, 90, 90));
-        newObject.GetComponent<ClapTrigger>().spawner = this;
         _tutorialMosquito = null;
         return newObject;
     }
