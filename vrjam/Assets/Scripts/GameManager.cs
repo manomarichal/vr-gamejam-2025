@@ -85,7 +85,14 @@ public class GameManager : MonoBehaviour
         int endHourAdjusted = endHour + (startHour > endHour ? 24 : 0);
 
         int currentHour = startHour + (int)(gameProgress * (endHourAdjusted - startHour));
-        int currentMinute = 0;
+        // int currentMinute = 0;
+
+        // get the minutes
+        int totalGameMinutes = (endHourAdjusted - startHour) * 60;
+        int currentMinute = (int)(gameProgress * totalGameMinutes) % 60;
+        // Round to 5 minutes
+        currentMinute = (currentMinute / 15) * 15;
+
 
         if (currentHour > 23) {
             currentHour -= 24;
