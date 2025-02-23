@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SPHERE_RADIUS: 1.5
-  speed: 1
+  speed: 0.7
   tutorialMode: 0
   handReachRadius: 0.5
   audioClips:
